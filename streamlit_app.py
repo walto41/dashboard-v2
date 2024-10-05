@@ -13,7 +13,7 @@ st.sidebar.subheader('Product Catagories')
 time_hist_color = st.sidebar.selectbox('Color by', ('Electronics', 'Cooking')) 
 
 st.sidebar.subheader('Subcatagories')
-donut_theta = st.sidebar.selectbox('Select data', ('q2', 'q3'))
+donut_theta = st.sidebar.selectbox('Select data', ('Computers', 'Phones', 'Cameras'))
 
 
 st.sidebar.markdown('''
