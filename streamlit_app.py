@@ -9,15 +9,12 @@ with open('style.css') as f:
     
 st.sidebar.header('Product Dashboard')
 
-st.sidebar.subheader('Heat map parameter')
+st.sidebar.subheader('Product Catagories')
 time_hist_color = st.sidebar.selectbox('Color by', ('temp_min', 'temp_max')) 
 
-st.sidebar.subheader('Donut chart parameter')
+st.sidebar.subheader('Subcatagories')
 donut_theta = st.sidebar.selectbox('Select data', ('q2', 'q3'))
 
-st.sidebar.subheader('Line chart parameters')
-plot_data = st.sidebar.multiselect('Select data', ['temp_min', 'temp_max'], ['temp_min', 'temp_max'])
-plot_height = st.sidebar.slider('Specify plot height', 200, 500, 250)
 
 st.sidebar.markdown('''
 ---
