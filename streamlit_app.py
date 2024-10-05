@@ -10,7 +10,7 @@ with open('style.css') as f:
 st.sidebar.header('Product Dashboard')
 
 st.sidebar.subheader('Product Catagories')
-time_hist_color = st.sidebar.selectbox('Color by', ('temp_min', 'temp_max')) 
+time_hist_color = st.sidebar.selectbox('Color by', ('Electronics', 'Cooking')) 
 
 st.sidebar.subheader('Subcatagories')
 donut_theta = st.sidebar.selectbox('Select data', ('q2', 'q3'))
