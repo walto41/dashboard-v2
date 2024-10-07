@@ -32,8 +32,8 @@ col2.metric("Customer Satisfaction", "89%", "+2%")
 col3.metric("Units Sold", "3.5K", "+5%")
 
 # Row B - Data visualizations
-sales_data = pd.read_csv('https://raw.githubusercontent.com/dataprofessor/data/master/stocks_toy.csv')
-product_data = pd.read_csv('https://raw.githubusercontent.com/tvst/plost/master/data/seattle-weather.csv', parse_dates=['date'])
+sales_data = pd.read_csv('https://raw.githubusercontent.com/dataprofessor/data/master/stocks_toy.csv', parse_dates=['date'])
+product_data = pd.read_csv('https://raw.githubusercontent.com/tvst/plost/master/data/seattle-weather.csv')
 
 c1, c2 = st.columns((7,3))
 with c1:
