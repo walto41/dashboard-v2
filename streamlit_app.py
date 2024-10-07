@@ -35,6 +35,9 @@ col3.metric("Units Sold", "3.5K", "+5%")
 sales_data = pd.read_csv('https://raw.githubusercontent.com/dataprofessor/data/master/stocks_toy.csv')
 product_data = pd.read_csv('https://raw.githubusercontent.com/tvst/plost/master/data/seattle-weather.csv', parse_dates=['date'])
 
+# Check the columns of sales_data
+st.write(sales_data.columns)
+
 c1, c2 = st.columns((7,3))
 with c1:
     st.markdown('### Sales Heatmap')
@@ -61,6 +64,11 @@ with c2:
 
 # Row C - Line chart for sales trend
 st.markdown('### Sales Trend Line Chart')
-plot_data = sales_data[['date', 'price']]  # Replace with actual sales data columns
-plot_height = 300
-st.line_chart(plot_data, x='date', y='price', height=plot_height)
+
+# Adjust column names based on actual data structure
+if 'date' in sales_data.columns and 'price' in sales_data.columns:
+    plot_data = sales_data[['date', 'price']]
+    plot_height = 300
+    st.line_chart(plot_data, x='date', y='price', height=plot_height)
+else:
+    st.error("Required columns ('date' and 'price') not found in sales_data.")
