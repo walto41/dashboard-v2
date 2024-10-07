@@ -50,30 +50,7 @@ product_data = pd.DataFrame({
     'category': np.random.choice(['Computers', 'Phones', 'Cameras', 'Kitchen Tools'], size=100)
 })
 
-# Row B - Data visualizations
-c1, c2 = st.columns((7,3))
-with c1:
-    st.markdown('### Sales Heatmap')
-    plost.time_hist(
-        data=sales_data,
-        date='date',
-        x_unit='week',
-        y_unit='day',
-        color=product_category,
-        aggregate='median',
-        legend=None,
-        height=345,
-        use_container_width=True
-    )
-with c2:
-    st.markdown('### Category Donut Chart')
-    plost.donut_chart(
-        data=sales_data,
-        theta=product_subcategory,
-        color='company',
-        legend='bottom', 
-        use_container_width=True
-    )
+
 
 # Row C - Line chart for sales trend
 st.markdown('### Sales Trend Line Chart')
