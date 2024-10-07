@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import plost
+import datetime
 
 # Set the page layout and initial sidebar state
 st.set_page_config(layout='wide', initial_sidebar_state='expanded')
@@ -31,18 +33,29 @@ col1.metric("Total Sales", "$120K", "+10%")
 col2.metric("Customer Satisfaction", "89%", "+2%")
 col3.metric("Units Sold", "3.5K", "+5%")
 
+# Generate random sales data
+np.random.seed(42)
+dates = pd.date_range(start="2023-01-01", periods=100)
+sales_data = pd.DataFrame({
+    'date': dates,
+    'price': np.random.uniform(10, 500, size=(100,)),
+    'category': np.random.choice(['Electronics', 'Home Appliances', 'Fashion', 'Cooking'], size=100),
+    'company': np.random.choice(['Company A', 'Company B', 'Company C'], size=100)
+})
+
+# Generate random product data
+product_data = pd.DataFrame({
+    'date': dates,
+    'sales': np.random.randint(50, 300, size=(100,)),
+    'category': np.random.choice(['Computers', 'Phones', 'Cameras', 'Kitchen Tools'], size=100)
+})
+
 # Row B - Data visualizations
-sales_data = pd.read_csv('https://raw.githubusercontent.com/dataprofessor/data/master/stocks_toy.csv')
-product_data = pd.read_csv('https://raw.githubusercontent.com/tvst/plost/master/data/seattle-weather.csv', parse_dates=['date'])
-
-# Check the columns of sales_data
-st.write(sales_data.columns)
-
 c1, c2 = st.columns((7,3))
 with c1:
     st.markdown('### Sales Heatmap')
     plost.time_hist(
-        data=product_data,
+        data=sales_data,
         date='date',
         x_unit='week',
         y_unit='day',
@@ -65,10 +78,7 @@ with c2:
 # Row C - Line chart for sales trend
 st.markdown('### Sales Trend Line Chart')
 
-# Adjust column names based on actual data structure
-if 'date' in sales_data.columns and 'price' in sales_data.columns:
-    plot_data = sales_data[['date', 'price']]
-    plot_height = 300
-    st.line_chart(plot_data, x='date', y='price', height=plot_height)
-else:
-    st.error("Required columns ('date' and 'price') not found in sales_data.")
+# Plot the sales trend line chart with random data
+plot_data = sales_data[['date', 'price']]
+plot_height = 300
+st.line_chart(plot_data, x='date', y='price', height=plot_height)
