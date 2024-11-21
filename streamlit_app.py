@@ -3,8 +3,7 @@ import pandas as pd
 import numpy as np
 import plost
 
-
-# Set the page layout and initial sidebar state
+# Ensure this is the first Streamlit command in your script
 st.set_page_config(layout='wide', initial_sidebar_state='expanded')
 
 # Load custom CSS for styling
@@ -13,6 +12,8 @@ with open('style.css') as f:
 
 # Sidebar configuration
 st.sidebar.header('Product Dashboard')
+
+# Rest of y
 
 # Sidebar parameters
 st.sidebar.subheader('Heatmap parameter')
