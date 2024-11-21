@@ -14,13 +14,17 @@ with open('style.css') as f:
 st.sidebar.header('Product Dashboard')
 
 st.sidebar.subheader('Heatmap Parameter')
-heatmap_color = st.sidebar.selectbox('Color by', ('sales', 'price'))
+heatmap_color = st.sidebar.selectbox('Color by', ('sales', 'price', 'profit', 'units_sold'))
 
 st.sidebar.subheader('Donut Chart Parameter')
-donut_theta = st.sidebar.selectbox('Select data', ('category', 'company'))
+donut_theta = st.sidebar.selectbox('Select data', ('category', 'company', 'profit'))
 
 st.sidebar.subheader('Line Chart Parameters')
-line_chart_data = st.sidebar.multiselect('Select data', ['price', 'sales'], ['price', 'sales'])
+line_chart_data = st.sidebar.multiselect(
+    'Select data',
+    ['price', 'sales', 'profit', 'units_sold', 'discount'],
+    ['sales', 'profit']
+)
 line_chart_height = st.sidebar.slider('Specify plot height', 200, 500, 300)
 
 st.sidebar.markdown('''
@@ -35,6 +39,9 @@ sales_data = pd.DataFrame({
     'date': dates,
     'price': np.random.uniform(10, 500, size=(100,)),
     'sales': np.random.randint(50, 300, size=(100,)),
+    'profit': np.random.uniform(5, 100, size=(100,)),
+    'units_sold': np.random.randint(1, 50, size=(100,)),
+    'discount': np.random.uniform(0, 50, size=(100,)),
     'category': np.random.choice(['Electronics', 'Home Appliances', 'Fashion', 'Cooking'], size=100),
     'company': np.random.choice(['Amazon', 'Temu', 'Walmart'], size=100)
 })
@@ -47,7 +54,7 @@ sales_data['week'] = sales_data['date'].dt.isocalendar().week  # Extract week nu
 st.markdown('### Metrics')
 col1, col2, col3 = st.columns(3)
 col1.metric("Total Revenue", f"${sales_data['price'].sum():,.2f}", "+5%")
-col2.metric("Units Sold", f"{sales_data['sales'].sum():,}", "+7%")
+col2.metric("Units Sold", f"{sales_data['units_sold'].sum():,}", "+7%")
 col3.metric("Top Company", sales_data['company'].mode()[0])
 
 # Row B - Visualizations
@@ -60,7 +67,7 @@ with c1:
         x_unit='week',  # Aggregating by week
         y_unit='day',  # Aggregating by day of the week
         color=heatmap_color,  # Selectable via sidebar
-        aggregate='mean',  # Aggregate sales or price values
+        aggregate='mean',  # Aggregate selected data (e.g., sales or price)
         legend=None,
         height=345,
         use_container_width=True
