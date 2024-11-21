@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import plost
 
-# This must be the first Streamlit command
+# Set Streamlit page configuration
 st.set_page_config(layout='wide', initial_sidebar_state='expanded')
 
 # Load custom CSS for styling
@@ -13,14 +13,13 @@ with open('style.css') as f:
 # Sidebar configuration
 st.sidebar.header('Product Dashboard')
 
-# Rest of your Streamlit code
-st.sidebar.subheader('Heatmap parameter')
-heatmap_color = st.sidebar.selectbox('Color by', ('category', 'company'))
+st.sidebar.subheader('Heatmap Parameter')
+heatmap_color = st.sidebar.selectbox('Color by', ('sales', 'price'))
 
-st.sidebar.subheader('Donut chart parameter')
+st.sidebar.subheader('Donut Chart Parameter')
 donut_theta = st.sidebar.selectbox('Select data', ('category', 'company'))
 
-st.sidebar.subheader('Line chart parameters')
+st.sidebar.subheader('Line Chart Parameters')
 line_chart_data = st.sidebar.multiselect('Select data', ['price', 'sales'], ['price', 'sales'])
 line_chart_height = st.sidebar.slider('Specify plot height', 200, 500, 300)
 
@@ -37,15 +36,19 @@ sales_data = pd.DataFrame({
     'price': np.random.uniform(10, 500, size=(100,)),
     'sales': np.random.randint(50, 300, size=(100,)),
     'category': np.random.choice(['Electronics', 'Home Appliances', 'Fashion', 'Cooking'], size=100),
-    'company': np.random.choice(['Company A', 'Company B', 'Company C'], size=100)
+    'company': np.random.choice(['Amazon', 'Temu', 'Walmart'], size=100)
 })
+
+# Preprocess data for the heatmap
+sales_data['day'] = sales_data['date'].dt.day_name()  # Extract day of the week
+sales_data['week'] = sales_data['date'].dt.isocalendar().week  # Extract week number
 
 # Row A - Metrics
 st.markdown('### Metrics')
 col1, col2, col3 = st.columns(3)
 col1.metric("Total Revenue", f"${sales_data['price'].sum():,.2f}", "+5%")
 col2.metric("Units Sold", f"{sales_data['sales'].sum():,}", "+7%")
-col3.metric("Top Category", sales_data['category'].mode()[0])
+col3.metric("Top Company", sales_data['company'].mode()[0])
 
 # Row B - Visualizations
 c1, c2 = st.columns((7, 3))
@@ -54,10 +57,10 @@ with c1:
     plost.time_hist(
         data=sales_data,
         date='date',
-        x_unit='week',
-        y_unit='day',
-        color=heatmap_color,
-        aggregate='median',
+        x_unit='week',  # Aggregating by week
+        y_unit='day',  # Aggregating by day of the week
+        color=heatmap_color,  # Selectable via sidebar
+        aggregate='mean',  # Aggregate sales or price values
         legend=None,
         height=345,
         use_container_width=True
