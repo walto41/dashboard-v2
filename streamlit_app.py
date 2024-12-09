@@ -72,15 +72,7 @@ with c1:
         height=345,
         use_container_width=True
     )
-with c2:
-    st.markdown('### Donut Chart')
-    plost.donut_chart(
-        data=sales_data,
-        theta=donut_theta,
-        color='company',
-        legend='bottom',
-        use_container_width=True
-    )
+
 
 # Row C - Line Chart
 st.markdown('### Line Chart')
